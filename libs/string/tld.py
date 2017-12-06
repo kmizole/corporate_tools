@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # vi: set foldmethod=indent: set tabstop=2: set shiftwidth=2:
 from libs.network.http import http_get
+from libs.string.punny import utf8_to_punny
 import re
 import logging
 import json
@@ -15,11 +16,13 @@ def _fetch_from_iana ():
   for l in http_get ("{}/{}".format (TLDS_LIST_URL, '/domains/root/db')).split ('\n'):
     m = re.match (RE_EXTRACT_TLD, l)
     if m:
-      for j in http_get ("{}/{}".format (TLDS_LIST_URL, m.group ('url'))).split ('\n'):
-        n = re.match (RE_EXTRACT_WHOIS_SERVER, j)
-        if n:
-          logger.debug ("Les infos whois du domaine {} sont sur le serveur {}.".format (m.group ('tld'), n.group ('server')))
-          yield (m.group ('tld'), n.group ('server'))
+      yield (m.group ('tld'), _extract_from_page (m.group ('url')))
+
+def _extract_from_page (page):
+  for i in http_get ("{}/{}".format (TLDS_LIST_URL, page)).split ('\n'):
+    n = re.match (RE_EXTRACT_WHOIS_SERVER, i)
+    if n:
+      return n.group ('server')
     
 def _get_ns_tlds_mapping_from_iana ():
   result = {}
@@ -29,6 +32,11 @@ def _get_ns_tlds_mapping_from_iana ():
     logger.info ("{} -> {}".format (*asso))
     result[asso[1]].append (asso[0])
   return result
+
+def get_server_for_tld (tlds = [ ]):
+  for t in tlds:
+    yield (t, _extract_from_page ("/domains/root/db/{}.html".format (utf8_to_punny (t))))
+
 
 def create_cache_data ():
   return _get_ns_tlds_mapping_from_iana ()

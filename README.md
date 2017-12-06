@@ -16,7 +16,7 @@ cd corporate_toools
 ./BATCH.py
 ```
 
-# Description des batchs
+# Description des traitements
 Tous les batchs disposent de l'option `-h` (ou `--help`) qui permet de connaitre les options utilisées par le traitement.
 
 ## `000_create_cache.py`
@@ -49,3 +49,29 @@ Tous les batchs disposent de l'option `-h` (ou `--help`) qui permet de connaitre
 |                                     8<...>8                                |
 +-----------------------------------------------+----------+-----------------+
 ```
+
+## Script `110_check_for_name_on_punnycode_replacement.py`
+  * À partir d'un domaine indiqué via l'option `-d`.
+  * Le script va réaliser un certain nombre de permutations (`a` => `â` par exemple), 
+  * Puis tenter de détecter si le domain est réservé & utilisé.
+  * La résolution DNS du domaine peut se faire de deux manières différentes (switch via l'option `adapter`) : 
+    * `web` pour requêter le service WEB http://dnslookup.fr.
+    * `dns` pour réaliser les requêtes DNS via la lib `dnspython`. **Adaptateur par défaut.**
+    * `none` quand on se fout des IP et qu'on ne cherche que le WHOIS.
+  * Un exemple de résultat : 
+
+```
+(VirtualEnv) [user@host corporate_tools]$ ./110_check_for_name_on_punnycode_replacement.py -d sample.fr   
++-----------+--------------------+----------------+----------+----------------+
+| Domaine   | Encodage PunnyCode | Encodage UTF-8 | Réservé? |         @IPv4? |
++-----------+--------------------+----------------+----------+----------------+
+| sample.fr |          sample.fr |      sample.fr |      Oui | 149.202.133.35 |
+| sample.fr |   xn--sampl-rsa.fr |      samplë.fr |      Non |            N/A |
+| sample.fr |   xn--sampl-8ra.fr |      samplè.fr |      Non |            N/A |
+| sample.fr |   xn--sampl-fsa.fr |      samplé.fr |      Non |            N/A |
+|                                     8<...>8                                 |
++-----------+--------------------+----------------+----------+----------------+
+```
+
+# TODO 
+  * Utiliser le cache pour le traitement `110_check_for_name_on_punnycode_replacement.py`.
