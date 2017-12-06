@@ -28,3 +28,4 @@ cd corporate_toools
   "serveur_whois2" : [ "tld2_1" ],
 }
 ```
+  * Il est important que le dossier de cache soit présent sur le système de fichiers. Par défaut, c'est le dossier `cache`.
