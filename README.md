@@ -4,8 +4,8 @@ Plusieurs outils & bibliothèques utilisés dans le service pour faire des chose
 ```
 python -m venv <NOM_ENVIRONNEMENT_VIRTUEL>
 source <NOM_ENVIRONNEMENT_VIRTUEL>/bin/activate
-git clone https://github.com/yapoc/corporate_toools.git
-cd corporate_toools
+git clone https://github.com/yapoc/corporate_tools.git
+cd corporate_tools
 pip install -r requirements
 ```
 
