@@ -37,17 +37,18 @@ def _compute_from_iana (element):
   for t in _fetch_from_iana ():
     yield ("{}.{}".format (element, t[0]), t[1])
 
-def compute_all_domains_tld (element, no_cache = False, cache_file = 'cache/tld_whois.py'):
-  if no_cache:
+def compute_all_domains_tld (element, use_cache = True, cache_file = 'cache/tld_whois.py'):
+  if use_cache == False:
     logger.info ("Récupération des informations depuis IANA (pas de cache).")
     yield _compute_from_iana (element)
-  try:
-    logger.info ("Récupération des informations à partir du fichier de cache {}.".format (cache_file))
-    with open (cache_file, 'r') as f:
-      temp = json.loads (f.read ())
-      for ns in temp:
-        for tld in temp[ns]:
-          yield ( "{}.{}".format (element, tld), ns )
-  except FileNotFoundError:
-    logger.error ("Impossible d'ouvrir le fichier de cache {}; récupération des informations depuis IANA.".format (cache_file))
-    return _compute_from_iana (element)
+  else:
+    try:
+      logger.info ("Récupération des informations à partir du fichier de cache {}.".format (cache_file))
+      with open (cache_file, 'r') as f:
+        temp = json.loads (f.read ())
+        for ns in temp:
+          for tld in temp[ns]:
+            yield ( "{}.{}".format (element, tld), ns )
+    except FileNotFoundError:
+      logger.error ("Impossible d'ouvrir le fichier de cache {}; récupération des informations depuis IANA.".format (cache_file))
+      yield _compute_from_iana (element)
