@@ -32,7 +32,7 @@ Tous les batchs disposent de l'option `-h` (ou `--help`) qui permet de connaitre
 ```
   * Il est important que le dossier de cache soit présent sur le système de fichiers. Par défaut, c'est le dossier `cache`.
 
-## Script `100_check_for_name_on_each_tld.py`
+## `100_check_for_name_on_each_tld.py`
   * À partir du mot indiqué via l'option `-n`, le script va vérifier que le domaine existe sur l'ensemble des TLDs connus.
   * Si on utilise le cache, il ne requête pas trop l'IANA comme un bourrin.
   * Si on utilise pas le cache, il "reconstruit" le cache à chaque opération pour connaitre le serveur de WHOIS affecté à chaque TLD.
@@ -50,7 +50,7 @@ Tous les batchs disposent de l'option `-h` (ou `--help`) qui permet de connaitre
 +-----------------------------------------------+----------+-----------------+
 ```
 
-## Script `110_check_for_name_on_punnycode_replacement.py`
+## `110_check_for_name_on_punnycode_replacement.py`
   * À partir d'un domaine indiqué via l'option `-d`.
   * Le script va réaliser un certain nombre de permutations (`a` => `â` par exemple), 
   * Puis tenter de détecter si le domain est réservé & utilisé.
@@ -73,7 +73,7 @@ Tous les batchs disposent de l'option `-h` (ou `--help`) qui permet de connaitre
 +-----------+--------------------+----------------+----------+----------------+
 ```
 
-## Script `120_check_for_name_completed_by_list.py`
+## `120_check_for_name_completed_by_list.py`
   * À partir d'un domaine et d'une liste de mots.
   * Produit la combinatoire des possibilités.
   * Et en teste l'existence sur tous les TLDs reconnus par l'IANA.
@@ -92,4 +92,7 @@ Tous les batchs disposent de l'option `-h` (ou `--help`) qui permet de connaitre
 ```
 
 # TODO 
-  * Utiliser le cache pour le traitement `110_check_for_name_on_punnycode_replacement.py`.
+
+| Tâche | Date traitement | 
+|-------|-----------------|
+| Utiliser le cache pour le traitement `110_check_for_name_on_punnycode_replacement.py` | 2017-12-07 |

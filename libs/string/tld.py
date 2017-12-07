@@ -33,9 +33,25 @@ def _get_ns_tlds_mapping_from_iana ():
     result[asso[1]].append (asso[0])
   return result
 
-def get_server_for_tld (tlds = [ ]):
-  for t in tlds:
-    yield (t, _extract_from_page ("/domains/root/db/{}.html".format (utf8_to_punny (t))))
+def get_server_for_tld (tlds = [ ], use_cache = True, cache_file = 'cache/tld_whois.py'):
+  if use_cache == False:
+    logger.info ("Récupération des informations sans passer par le fichier de cache.")
+    for t in tlds:
+      yield (t, _extract_from_page ("/domains/root/db/{}.html".format (utf8_to_punny (t))))
+  else:
+    try:
+      logger.info ("Récupération des informations à partir du fichier de cache {}.".format (cache_file))
+      with open (cache_file, 'r') as f:
+        temp = json.loads (f.read ())
+        for ns in temp:
+          for tld in temp[ns]:
+            if tld in tlds:
+              yield (tld, ns)
+    except FileNotFoundError:
+      logger.error ("Impossible d'ouvrir le fichier de cache {}; récupération des informations depuis IANA.".format (cache_file))
+      for t in tlds:
+        yield (t, _extract_from_page ("/domains/root/db/{}.html".format (utf8_to_punny (t))))
+    
 
 
 def create_cache_data ():

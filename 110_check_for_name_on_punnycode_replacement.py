@@ -21,12 +21,13 @@ HEADERS = [ 'Domaine', 'Encodage PunnyCode', 'Encodage UTF-8', 'Réservé?' , '@
 logger = logging.getLogger (__name__)
 
 def run (**kwargs):
-  if 'domain' not in kwargs or 'adapter' not in kwargs:
-    raise Exception ("La fonction n'est pas appellée correctement.")
+  for i in [ 'domain', 'adapter', 'use_cache', 'cache_file' ]:
+    if i not in kwargs:
+      raise Exception ("La fonction n'est pas appellée correctement.")
   try:
     (domain, tld) = extract_domain_tld (kwargs['domain'])
     """ Petite astuce, on est sur un itérateur; on en veut le premier."""
-    whois_server = next (get_server_for_tld ([ tld ]))[1]
+    whois_server = next (get_server_for_tld (tlds = [ tld ], use_cache = kwargs['use_cache'], cache_file = kwargs['cache_file']))[1]
     for punny_domain in derivate_domains (domain):
       punny = "{}.{}".format (punny_domain[1], tld)
       punny_reserved = "Non"
@@ -53,9 +54,12 @@ if __name__ == "__main__":
     dest = 'adapter')
   parser.add_argument ('-o', '--output', type = argparse.FileType ('w'), \
     default = sys.stdout, help = "Emplacement du rapport.", dest = 'output' )
+  parser.add_argument ('--use-cache', required = False, default = True, \
+    help = "Activer ce booléen pour ne pas utiliser le dossier de cache.", \
+    action = 'store_false' )
+  parser.add_argument ('--cache-file', required = False, default = "cache/tld_whois.py", \
+    help = "Fichier de cache.")
   args = parser.parse_args ()
-
-  logger.debug ("Arguments utilisés par le script : {}.".format (args))
 
   args.output.write (SEP_LINE)
   args.output.write ("""| {:<25} | {:>40} | {:>25} | {:>8} | {:>15} |\n""".format (*HEADERS))
@@ -63,7 +67,8 @@ if __name__ == "__main__":
 
   try:
     for current_domain in args.domain:
-      for l in run (domain = current_domain, adapter = args.adapter):
+      for l in run (domain = current_domain, adapter = args.adapter, \
+        use_cache = args.use_cache, cache_file = args.cache_file):
         args.output.write ("""| {:<25} | {:>40} | {:>25} | {:>8} | {:>15} |\n""".format (*l))
       args.output.write (SEP_LINE)
   except Exception as e:
