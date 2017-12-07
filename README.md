@@ -73,5 +73,23 @@ Tous les batchs disposent de l'option `-h` (ou `--help`) qui permet de connaitre
 +-----------+--------------------+----------------+----------+----------------+
 ```
 
+## Script `120_check_for_name_completed_by_list.py`
+  * À partir d'un domaine et d'une liste de mots.
+  * Produit la combinatoire des possibilités.
+  * Et en teste l'existence sur tous les TLDs reconnus par l'IANA.
+  * Un exemple de résultat : 
+
+```
+(VirtualEnv) [user@host corporate_tools]$ ./120_check_for_name_completed_by_list.py -d example.org -wl /tmp/liste
++-----------------------+----------+
+| Domaine               | Réservé? |
++-----------------------+----------+
+| example-test.africa   |      Non |
+| example-test.capetown |      Non |
+| example-test.cc       |      Non |
+|               8<...>8            |
++-----------------------+----------+
+```
+
 # TODO 
   * Utiliser le cache pour le traitement `110_check_for_name_on_punnycode_replacement.py`.
