@@ -81,25 +81,27 @@ Algorithme :
   if _is_to_many_requests (raw_data):
     raise TooManyWhoisRequestsException ("Trop de requêtes trop rapprochées.")
   
+  r = {
+    'domain_name': [],
+    'registrar': [],
+    'registrant': [],
+    'creation_date': [],
+    'expiration_date': [],
+    'updated_date': [],
+    'name_servers': [],
+    'status': [],
+  }
   try:
     parser = getattr (import_module ('libs.string.whois_parsers.{}'.format (tld)), 'parser')
-    r = {
-      'domain_name': [],
-      'registrar': [],
-      'registrant': [],
-      'creation_date': [],
-      'expiration_date': [],
-      'updated_date': [],
-      'name_servers': [],
-      'status': [],
-    }
     for k, v in parser.items ():
       if v[0] is None:
         r[k].append ( v[1] )
       else:
+        t = re.compile (v[0])
         matches = re.compile (v[0]).findall(raw_data) or [ v[1] ]
         for m in matches:
           r[k].append (m)
     return _adjust (r)
   except ModuleNotFoundError:
     logger.error ("Impossible de charger le parser pour le domaine {}".format (tld))
+    return r
