@@ -8,3 +8,5 @@ class WrongDomainException (Exception):
 class TimeoutException (Exception):
   pass
 
+class TooManyWhoisRequestsException (Exception):
+  pass

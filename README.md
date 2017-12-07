@@ -91,6 +91,18 @@ Tous les batchs disposent de l'option `-h` (ou `--help`) qui permet de connaitre
 +-----------------------+----------+
 ```
 
+## `200_enrich_domains_list.py`
+  * À partir d'une liste de noms de domaines.
+  * Fait les requêtes WHOIS nécessaires à la récupération de certaines informations.
+  * Et produit un fichier CSV.
+  * Un exemple de résultat : 
+
+```
+(VirtualEnv) [user@host corporate_tools]$ ./200_enrich_domains_list.py -i /tmp/liste 
+Domaine;Registrar;Propriétaire;Date Expiration;DNS
+example.org;ICANN;Internet Assigned Numbers Authority;2010-08-30 04:00:00;a.iana-servers.net,b.iana-servers.net
+```
+
 # TODO 
 
 | Tâche | Date traitement | 

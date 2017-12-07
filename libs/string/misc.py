@@ -7,7 +7,7 @@ logger = logging.getLogger (__name__)
 _WORDS_SEPARATORS = [ '-', '_' ]
 
 def extract_domain_tld (element):
-  temp = element.split ('.')
+  temp = element.lower ().split ('.')
   if len (temp) < 2:
     raise WrongDomainException ("{} ne ressemble vraiment pas à un domaine!!!.".format (element))
   return ("".join (temp[:-1]), temp[-1])
@@ -31,3 +31,11 @@ def shuffle_words_from_lists (domain, words_list, combine = False, combine_times
   for temp in product (*possibilities):
     if domain in (temp):
       yield "".join (temp)
+
+def load_domains_from_file (file = None):
+  with open (file, 'r') as f:
+    for l in f:
+      try:
+        yield ".".join (extract_domain_tld (l.strip ()))
+      except WrongDomainException as e:
+        logger.warn (e)

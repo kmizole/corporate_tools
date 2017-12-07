@@ -4,8 +4,14 @@ import time
 import socket
 import signal
 import logging
-from libs.exceptions import TimeoutException
+from libs.exceptions import TimeoutException, TooManyWhoisRequestsException
+from libs.string.tld import get_server_for_tld
+from libs.string.misc import extract_domain_tld
+from libs.string.whois import parse
 logger = logging.getLogger (__name__)
+
+NB_RETRY_ON_EMPTY_RESPONSE = 5
+TIME_SLEEP_BEFORE_RETRY = 5
 
 """https://stackoverflow.com/questions/492519/timeout-on-a-function-call"""
 def _time_out_handler (signum, frame):
@@ -32,6 +38,7 @@ def _do_whois_query (domain, whois_server = None):
       if t == b'': break
 
     s.close()
+    logger.info ("La requête s'est bien passée.")
   except TimeoutException as e:
     logger.error ("Timeout lors de l'interrogation de {}".format (whois_server))
     return ""
@@ -53,3 +60,19 @@ def estimate_domain_is_registered (domain, whois_server = None):
   logger.info ("Je pense que le domaine {} n'est pas réservé.".format (domain))
   return False
 
+def query (domain, use_cache = False, cache_file = None):
+  whois_server = None
+  tld = extract_domain_tld (domain)[1]
+  if use_cache:
+    """On manipule toujours un itérateur; pour chopper le premier faut utiliser next."""
+    whois_server = next (get_server_for_tld (tlds = [ tld ],\
+      use_cache = use_cache, cache_file = cache_file))[1]
+
+  raw_data = ""
+  for i in range (1, NB_RETRY_ON_EMPTY_RESPONSE):
+    raw_data = _do_whois_query (domain, whois_server)
+    try:
+      return parse (raw_data, tld)
+    except TooManyWhoisRequestsException:
+      logger.info ("La réponse est vide; on fait une pause et on réessaye.")
+      time.sleep (TIME_SLEEP_BEFORE_RETRY * i)
