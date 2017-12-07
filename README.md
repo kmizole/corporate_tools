@@ -95,6 +95,7 @@ Tous les batchs disposent de l'option `-h` (ou `--help`) qui permet de connaitre
   * À partir d'une liste de noms de domaines.
   * Fait les requêtes WHOIS nécessaires à la récupération de certaines informations.
   * Et produit un fichier CSV.
+  * Les expressions régulières permettant de parser le résultat se trouvent dans le module `libs.string.whois_parser`.
   * Un exemple de résultat : 
 
 ```
