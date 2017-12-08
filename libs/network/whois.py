@@ -34,8 +34,11 @@ def _do_whois_query (domain, whois_server = None):
     s.send(("%s\r\n" % domain).encode())
     while 1:
       t = s.recv(4096)
+      logger.debug ("Réception de {}".format (t))
       response.append(t)
-      if t == b'': break
+      if t == b'': 
+        logger.debug ("On coupe; chaine vide!")
+        break
 
     s.close()
     logger.info ("La requête s'est bien passée.")
