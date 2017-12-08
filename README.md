@@ -142,3 +142,4 @@ example.org;ICANN;Internet Assigned Numbers Authority;2010-08-30 04:00:00;a.iana
 | Utiliser le cache pour le traitement `110_check_for_name_on_punnycode_replacement.py` | 2017-12-07 |
 | Faire un script qui vient lire le whois de `google` sur chaque TLD connu de l'IANA et en déduit les parsers (car les informations ne changent jamais) | xxxx |
 | Revoir la structure du parser pour intégrer le Xème résultat du match de l'expression régulière | xxxx |
+| Trouver un moyen de gérer les doubles extensions, comme `.co.uk` ou `.com.br`. | xxxx |
