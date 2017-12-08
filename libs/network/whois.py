@@ -50,7 +50,7 @@ def _do_whois_query (domain, whois_server = None):
     logger.error (e)
     return ""
 
-  return b''.join(response).decode()
+  return b''.join(response).decode(errors = 'replace')
 
 def estimate_domain_is_registered (domain, whois_server = None):
   for l in _do_whois_query (domain = domain, whois_server = whois_server).lower ().split ('\n'):
