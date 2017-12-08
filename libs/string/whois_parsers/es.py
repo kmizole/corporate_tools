@@ -1,9 +1,10 @@
 parser = {
-  "creation_date": [ None, "1970-01-01T00:00:01" ], 
-  "domain_name": [ None, "Champ_absent_du_registre" ], 
-  "expiration_date": [ None, "1970-01-01T00:00:01" ], 
-  "name_servers": [ None, "Champ_absent_du_registre" ], 
-  "registrant": [ None, "Champ_absent_du_registre" ], 
-  "registrar": [ None, "Champ_absent_du_registre" ], 
-  "updated_date": [ None, "1970-01-01T00:00:01" ]
+  "creation_date": [ None, "CHAMP_ABSENT_DU_RÉFÉRENTIEL" ], 
+  "domain_name": [ None, "CHAMP_ABSENT_DU_RÉFÉRENTIEL" ], 
+  "expiration_date": [ None, "CHAMP_ABSENT_DU_RÉFÉRENTIEL" ], 
+  "name_servers": [ None, "CHAMP_ABSENT_DU_RÉFÉRENTIEL" ], 
+  "registrant": [ None, "CHAMP_ABSENT_DU_RÉFÉRENTIEL" ], 
+  "registrar": [ None, "CHAMP_ABSENT_DU_RÉFÉRENTIEL" ], 
+  "status": [ None, "CHAMP_ABSENT_DU_RÉFÉRENTIEL" ],
+  "updated_date": [ None, "CHAMP_ABSENT_DU_RÉFÉRENTIEL" ]
 }
