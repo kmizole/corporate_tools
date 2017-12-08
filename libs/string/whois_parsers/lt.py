@@ -3,7 +3,8 @@ parser = {
   "domain_name": [ "Domain:\s+(.+)", "" ], 
   "expiration_date": [ "Expires:\s+(.+)", "" ], 
   "name_servers": [ "Nameserver:\s+(.+)", "" ], 
-  "registrant": [ None, "Champ_absent_du_registre" ], 
+  "registrant": [ None, "CHAMP_ABSENT_DU_RÉFÉRENTIEL" ], 
   "registrar": [ "Registrar:\s+(.+)", "" ], 
-  "updated_date": [ None, "1970-01-01T00:00:01" ]
+  "status": [ "Status:\s+(.+)", "" ],
+  "updated_date": [ None, "CHAMP_ABSENT_DU_RÉFÉRENTIEL" ]
 }
