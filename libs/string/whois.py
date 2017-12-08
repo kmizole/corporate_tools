@@ -91,15 +91,23 @@ Algorithme :
     'name_servers': [],
     'status': [],
   }
+  tld = tld.lower ()
   try:
+    logger.debug ("Chargement du parser pour le tld {}".format (tld))
     parser = getattr (import_module ('libs.string.whois_parsers.{}'.format (tld)), 'parser')
     for k, v in parser.items ():
+      logger.debug ("Traitement de la clef {}".format (k))
       if v[0] is None:
+        logger.debug ("Expression rationnelle None => ajout de {}".format (v[1]))
         r[k].append ( v[1] )
       else:
-        t = re.compile (v[0])
-        matches = re.compile (v[0]).findall(raw_data) or [ v[1] ]
-        for m in matches:
+        logger.debug ("Expression rationnelle définie à compiler.")
+        matches = re.compile (v[0]).findall (raw_data)
+        logger.debug ("Matches : {}".format (matches))
+        values = matches or [ v[1] ]
+        logger.debug ("Values : {}".format (values))
+        for m in values:
+          logger.debug ("Ajout de {}".format (m))
           r[k].append (m)
     return _adjust (r)
   except ModuleNotFoundError:
