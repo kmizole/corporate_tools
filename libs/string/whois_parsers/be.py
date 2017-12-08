@@ -1,10 +1,10 @@
 parser = {
-  "creation_date": [ "Registered: \s*(.+)\n", "" ], 
-  "domain_name": [ "\nDomain: \s*(.+)", "" ], 
-  "expiration_date": [ "Expiry Date: \s*(.+)", "" ], 
-  "name_servers": [ "\nnameservers: \s*(.+)\n\s*(.+)\n", "" ], 
-  "registrant": [ "Registrant: \s*\n\s*(.+)", "" ], 
-  "registrar": [ "Registrar Technical Contacts: \s*\n\s*Name.*\n\sOrganisation: \s*(.+)", "" ], 
-  "status": [ "Status: \s?(.+)", "" ], 
-  "updated_date": [ "\nlast modified: \s*(.+)\n", "" ]
+  "creation_date": [ "Registered:\s+(.+)", "" ], 
+  "domain_name": [ "Domain:\s+(.+)", "" ], 
+  "expiration_date": [ None, "CHAMP_ABSENT_DU_RÉFÉRENTIEL" ],
+  "name_servers": [ "Nameservers:\n\s+(.+)", "IMPOSSIBLE_DE_GARANTIR_AVEC_CERTITUDE_LE_PARSING" ], 
+  "registrant": [ None, "CHAMP_ABSENT_DU_RÉFÉRENTIEL" ], 
+  "registrar": [ "Registrar:\s+\n\s+Name:\s+(.+)", "" ], 
+  "status": [ "Status:\s+(.+)", "" ], 
+  "updated_date": [ None, "CHAMP_ABSENT_DU_RÉFÉRENTIEL" ]
 }
