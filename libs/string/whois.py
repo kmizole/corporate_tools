@@ -37,15 +37,19 @@ DATE_FORMATS = [
   '%Y%m%d',                 # 20171129
 ]
 
+NO_CONVERT_CONSTANTS = [ 'CHAMP_ABSENT_DU_RÉFÉRENTIEL' ]
+
 def _is_to_many_requests (raw_data):
   if 'too many requests' in raw_data.lower ():
     return True
   return False
 
 def _string_to_date (string):
+  if string in NO_CONVERT_CONSTANTS:
+    return string
+  elif not string:
+    return ''
   string = string.strip().lower()
-  if not string:
-    return ""
 
   for format in DATE_FORMATS:
     try: 
