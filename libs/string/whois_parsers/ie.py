@@ -3,7 +3,8 @@ parser = {
   "domain_name": [ "domain:\s+(.+)", "" ], 
   "expiration_date": [ "renewal:\s+(.+)", "" ], 
   "name_servers": [ "nserver:\s+(.+)", "" ], 
-  "registrant": [ None, "Champ_absent_du_registre" ], 
-  "registrar": [ None, "Champ_absent_du_registre" ], 
-  "updated_date": [ None, "1970-01-01T00:00:01" ]
+  "registrant": [ "descr:\s+(.+)", "CHAMP_ABSENT_DU_RÉFÉRENTIEL" ], 
+  "registrar": [ "person:\s+(.+)", "CHAMP_ABSENT_DU_RÉFÉRENTIEL" ], 
+  "status": [ None, "CHAMP_ABSENT_DU_RÉFÉRENTIEL" ],
+  "updated_date": [ None, "CHAMP_ABSENT_DU_RÉFÉRENTIEL" ]
 }
