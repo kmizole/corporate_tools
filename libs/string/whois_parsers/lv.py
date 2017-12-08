@@ -1,10 +1,10 @@
 parser = {
-  "creation_date": [ "Registered: \s*(.+)\n", "" ], 
-  "domain_name": [ "\ndomain: \s*(.+)", "" ], 
-  "expiration_date": [ "\npaid-till: \s*(.+)", "" ], 
-  "name_servers": [ "\nnserver: \s*(.+)", "" ], 
-  "registrant": [ "Registrant Name: \s*(.+)", "" ], 
-  "registrar": [ "Registrar: \s?(.+)", "" ], 
-  "status": [ "Status: \s?(.+)", "" ], 
-  "updated_date": [ "Changed: \s*(.+)\n", "" ]
+  "creation_date": [ None, "CHAMP_ABSENT_DU_RÉFÉRENTIEL" ], 
+  "domain_name": [ "Domain: \s*(.+)", "" ], 
+  "expiration_date": [ None, "CHAMP_ABSENT_DU_RÉFÉRENTIEL" ], 
+  "name_servers": [ "Nserver: (.+)", "" ], 
+  "registrant": [ "\[Holder]\nType:.+\nName: (.+)", "" ], 
+  "registrar": [ "\[Registrar]\nType:.+\nName: (.+)", "" ], 
+  "status": [ "Status: (.+)", "" ], 
+  "updated_date": [ "Updated: (.+)\.", "" ]
 }
