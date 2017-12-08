@@ -6,5 +6,5 @@ parser = {
   "registrant": [ "Registrant Contact Information:\n\nCompany English Name .+:\s+(.+)", "" ], 
   "registrar": [ "Registrar Name:\s+(.+)", "" ], 
   "status": [ "Domain Status: (.+)", "" ],
-  "updated_date": [ None, "1970-01-01T00:00:01" ]
+  "updated_date": [ None, "CHAMP_ABSENT_DU_RÉFÉRENTIEL" ]
 }
