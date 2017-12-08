@@ -5,5 +5,6 @@ parser = {
   "name_servers": [ "nameserver:\s+(.+)", "" ], 
   "registrant": [ "registrant:\s+(.+)", "" ], 
   "registrar": [ "registrar:\s+(.+)", "" ], 
-  "updated_date": [ None, "1970-01-01T00:00:01" ]
+  "status": [ "status:\t+(.+)", "" ],
+  "updated_date": [ None, "CHAMP_ABSENT_DU_RÉFÉRENTIEL" ]
 }
