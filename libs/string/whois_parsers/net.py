@@ -1,7 +1,7 @@
 parser = {
   "creation_date": [ "Creation Date: \s?(.+)", "" ], 
   "domain_name": [ "Domain Name: \s?(.+)", "" ], 
-  "expiration_date": [ "Registrar Registration Expiration Date: (.+)", "" ], 
+  "expiration_date": [ "Registry Expiry Date: (.+)", "" ], 
   "name_servers": [ "Name Server: \s*(.+)\s*", "" ], 
   "registrant": [ "Registrant Name: \s*(.+)", "" ], 
   "registrar": [ "Registrar: \s?(.+)", "" ], 
