@@ -50,6 +50,37 @@ Tous les batchs disposent de l'option `-h` (ou `--help`) qui permet de connaitre
 +-----------------------------------------------+----------+-----------------+
 ```
 
+## `005_test_whois_parser.py`
+  * À partir du domaine indiqué via l'option `-d`.
+  * Fait la requête whois.
+  * Tente de la parser.
+  * Je m'en sers surtout pour afficher les messages de `debug` & tester unitairement les parsers.
+  * Un exemple de résultat : 
+
+```
+(VirtualEnv) [user@host corporate_tools]$ ./005_test_whois_parser.py -d example.org
+[2017-12-08 10:49:10,854] - DEBUG    - libs.network.whois - Serveur de whois non fourni, supposition en cours.
+[2017-12-08 10:49:10,855] - INFO     - libs.network.whois - Utilisation du serveur org.whois-servers.net pour whois sur domaine example.org.
+        8<...>8
+[2017-12-08 10:49:11,119] - DEBUG    - libs.network.whois - Réception de b'Domain [2017-12-08 10:49:11,137] - DEBUG    - libs.string.whois - Traitement de la clef updated_date
+[2017-12-08 10:49:11,137] - DEBUG    - libs.string.whois - Expression rationnelle définie à compiler.
+[2017-12-08 10:49:11,138] - DEBUG    - libs.string.whois - Matches : []
+[2017-12-08 10:49:11,138] - DEBUG    - libs.string.whois - Values : ['']
+[2017-12-08 10:49:11,139] - DEBUG    - libs.string.whois - Ajout de 
+Domain Name: EXAMPLE.ORG
+        8<...>8
+URL of the ICANN Whois Inaccuracy Complaint Form: https://www.icann.org/wicf/
+----------------------------------------------
+{
+    "creation_date": "",
+    "domain_name": [
+        "EXAMPLE.ORG"
+    ],
+    8<...>8
+    "updated_date": ""
+}
+```
+
 ## `110_check_for_name_on_punnycode_replacement.py`
   * À partir d'un domaine indiqué via l'option `-d`.
   * Le script va réaliser un certain nombre de permutations (`a` => `â` par exemple), 
