@@ -79,3 +79,6 @@ def query (domain, use_cache = False, cache_file = None):
     except TooManyWhoisRequestsException:
       logger.info ("La réponse est vide; on fait une pause et on réessaye.")
       time.sleep (TIME_SLEEP_BEFORE_RETRY * i)
+    except TimeoutException as e:
+      logger.error ("Timeout lors de l'interrogation pour {}".format (domain))
+      return parse ("", tld)
