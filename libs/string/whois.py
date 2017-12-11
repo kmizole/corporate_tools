@@ -116,4 +116,4 @@ Algorithme :
     return _adjust (r)
   except ModuleNotFoundError:
     logger.error ("Impossible de charger le parser pour le domaine {}".format (tld))
-    return r
+    return None
