@@ -8,8 +8,7 @@ import signal
 import socket
 import time
 from libs.exceptions import TimeoutException, TooManyWhoisRequestsException
-from libs.string.tld import get_server_for_tld
-from libs.string.misc import extract_domain_tld
+from libs.string.tld import extract_domain_tld, get_server_for_tld
 logger = logging.getLogger (__name__)
 
 NB_RETRY_ON_EMPTY_RESPONSE = 5

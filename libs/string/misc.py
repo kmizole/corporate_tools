@@ -6,11 +6,6 @@ logger = logging.getLogger (__name__)
 
 _WORDS_SEPARATORS = [ '-', '_' ]
 
-def extract_domain_tld (element):
-  temp = element.lower ().split ('.')
-  if len (temp) < 2:
-    raise WrongDomainException ("{} ne ressemble vraiment pas à un domaine!!!.".format (element))
-  return ("".join (temp[:-1]), temp[-1])
 
 def shuffle_words_from_lists (domain, words_list, combine = False, combine_times = 3):
   possibilities = []
@@ -39,3 +34,6 @@ def load_domains_from_file (file = None):
         yield ".".join (extract_domain_tld (l.strip ()))
       except WrongDomainException as e:
         logger.warn (e)
+
+def utf8_to_punny (word):
+  return word.encode ('idna').decode ('ascii')

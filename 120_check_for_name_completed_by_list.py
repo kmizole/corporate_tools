@@ -9,9 +9,8 @@ logging.basicConfig (
 )
 
 from libs.exceptions import ParameterException
-from libs.string.misc import extract_domain_tld
+from libs.string.tld import extract_domain_tld, compute_all_domains_tld
 from libs.string.misc import shuffle_words_from_lists
-from libs.string.tld import compute_all_domains_tld
 from libs.network.whois import estimate_domain_is_registered
 
 SEP_LINE = """+-{:-<75}-+-{:->10}-+\n""".format ("", "", "", "", "")

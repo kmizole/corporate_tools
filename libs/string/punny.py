@@ -1,7 +1,7 @@
 # vi: set foldmethod=indent: set tabstop=2: set shiftwidth=2:
 from itertools import product
-from libs.string.misc import extract_domain_tld
-from libs.exceptions import WrongDomainException
+from libs.string.tld import domain_from_element
+from libs.string.misc import utf8_to_punny
 import logging
 logger = logging.getLogger (__name__)
 
@@ -19,12 +19,6 @@ _REPLACEMENTS = {
   'w': ['vv'],
 }
 
-def _domain_from_element (element):
-  try:
-    return extract_domain_tld (element)[0]
-  except WrongDomainException: 
-    return element
-
 def _build_letters_tree (word):
   result = []
   for letter in word:
@@ -34,11 +28,8 @@ def _build_letters_tree (word):
     result.append (temp)
   return result
 
-def utf8_to_punny (word):
-  return word.encode ('idna').decode ('ascii')
-
 def derivate_domains (domain):
-  domain = _domain_from_element (domain)
+  domain = domain_from_element (domain)
   logger.info ("Tentative d'identification des domaines dérivés de {}".format (domain))
   possibilities = _build_letters_tree (domain)
   logger.debug ("Produits cartésiens qu'il va falloir se fader.".format (possibilities))

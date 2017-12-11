@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # vi: set foldmethod=indent: set tabstop=2: set shiftwidth=2:
 from libs.network.http import http_get
-from libs.string.punny import utf8_to_punny
+from libs.string.misc import utf8_to_punny
+from libs.exceptions import WrongDomainException
 import re
 import logging
 import json
@@ -54,8 +55,6 @@ def get_server_for_tld (tlds = [ ], use_cache = True, cache_file = 'cache/tld_wh
       for t in tlds:
         yield (t, _extract_from_page ("/domains/root/db/{}.html".format (utf8_to_punny (t))))
     
-
-
 def create_cache_data ():
   return _get_ns_tlds_mapping_from_iana ()
 
@@ -88,3 +87,15 @@ def get_tlds_list ():
         l = l.replace ('*.', '')
       result.append (utf8_to_punny (l))
   return result
+
+def extract_domain_tld (element):
+  temp = element.lower ().split ('.')
+  if len (temp) < 2:
+    raise WrongDomainException ("{} ne ressemble vraiment pas à un domaine!!!.".format (element))
+  return ("".join (temp[:-1]), temp[-1])
+
+def domain_from_element (element):
+  try:
+    return extract_domain_tld (element)[0]
+  except WrongDomainException: 
+    return element

@@ -10,8 +10,7 @@ logging.basicConfig (
 
 from libs.exceptions import ParameterException
 from libs.string.punny import derivate_domains
-from libs.string.misc import extract_domain_tld
-from libs.string.tld import get_server_for_tld
+from libs.string.tld import extract_domain_tld, get_server_for_tld
 from libs.network.nslookup import lookup
 from libs.network.whois import estimate_domain_is_registered
 
