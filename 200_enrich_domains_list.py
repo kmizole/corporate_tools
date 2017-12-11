@@ -27,7 +27,10 @@ if __name__ == "__main__":
     f.write ("""Domaine;Registrar;Propriétaire;Date Expiration;DNS\n""")
     for domain in load_domains_from_file (args.input_file):
       logger.info ("Traitement du domaine {}".format (domain))
-      d = query (domain, use_cache = args.use_cache, cache_file = args.cache_file)
-      line_content = "{};{};{};{};{}\n".format (domain, d['registrar'][0],\
-        d['registrant'][0], d['expiration_date'][0], ",".join (d['name_servers']))
-      f.write (line_content)
+      try:
+        d = query (domain, use_cache = args.use_cache, cache_file = args.cache_file)
+        line_content = "{};{};{};{};{}\n".format (domain, d['registrar'][0],\
+          d['registrant'][0], d['expiration_date'][0], ",".join (d['name_servers']))
+        f.write (line_content)
+      except (IndexError, TypeError):
+        logger.error ("Problème sur la gestion de {}".format (domain))

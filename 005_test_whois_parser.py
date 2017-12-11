@@ -39,7 +39,10 @@ if __name__ == "__main__":
   whois_data = _do_whois_query (args.domain, whois_server = whois_server)
   data = parse (whois_data, tld)
   for k in [ 'creation_date', 'expiration_date', 'updated_date' ]:
-    data[k] = str (data[k][0])
+    try:
+      data[k] = str (data[k][0])
+    except (IndexError, TypeError):
+      continue
   print (whois_data)
   print ("----------------------------------------------")
   print (json.dumps (data, sort_keys = True, indent = 4))
