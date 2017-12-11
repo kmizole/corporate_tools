@@ -7,7 +7,7 @@ import sys
 from libs.network.whois import _do_whois_query
 from libs.string.misc import extract_domain_tld
 from libs.string.tld import get_server_for_tld
-from libs.string.whois import parse
+from libs.network.whois import parse
 logging.basicConfig (
   format = "[%(asctime)s] - %(levelname)-8s - %(name)-15s - %(message)s",
   level = logging.DEBUG,
