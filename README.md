@@ -135,6 +135,23 @@ Domaine;Registrar;Propriétaire;Date Expiration;DNS
 example.org;ICANN;Internet Assigned Numbers Authority;2010-08-30 04:00:00;a.iana-servers.net,b.iana-servers.net
 ```
 
+# Petit tutoriel `git`
+## Création d'une nouvelle feature en local:
+```
+git checkout -b NOM_DE_LA_BRANCHE_LOCALE
+```
+
+## Pousser la feature locale sur la branche `developpement` du github:
+```
+git checkout developpement
+git pull origin developpement
+git checkout NOM_DE_LA_BRANCHE_LOCALE
+git rebase developpement
+git checkout developpement
+git merge NOM_DE_LA_BRANCHE_LOCALE
+git push origin developpement
+```
+
 # TODO 
 
 | Tâche | Date traitement | 
