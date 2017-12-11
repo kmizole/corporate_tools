@@ -27,7 +27,7 @@ def _do_whois_query (domain, whois_server = None):
   logger.info ("Utilisation du serveur {} pour whois sur domaine {}.".format (whois_server, domain))
   response = []
 
-  signal.alarm (10)
+  signal.alarm ( NB_RETRY_ON_EMPTY_RESPONSE * TIME_SLEEP_BEFORE_RETRY + 1 )
   try:
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect(((whois_server, 43)))
