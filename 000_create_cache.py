@@ -8,8 +8,7 @@ logging.basicConfig (
   format = "[%(asctime)s] - %(levelname)-8s - %(name)-15s - %(message)s",
   level = logging.INFO,
 )
-from libs.string.tld import create_cache_data as tld_whois_cache_data
-from libs.string.tld import get_tlds_list
+from libs.network.caches import fetch_tld_whoisserver_cache, fetch_tld_list
 logger = logging.getLogger (__name__)
 
 if __name__ == "__main__":
@@ -26,10 +25,11 @@ if __name__ == "__main__":
   logger.info ("Début de la génération des caches.")
   if args.cache_tld_whois:
     logger.info ("Rafraîchissement du cache pour les associations tld <=> serveur de whois.")
-    result = tld_whois_cache_data ()
+    result = fetch_tld_whoisserver_cache ()
     args.cache_tld_whois.write (json.dumps (result, sort_keys = True, indent = 2))
 
   if args.cache_tld_list:
     logger.info ("Rafraîchissement du cache pour les TLDs reconnus.")
-    result = get_tlds_list ()
+    result = fetch_tld_list ()
     args.cache_tld_list.write (json.dumps (result, sort_keys = True, indent = 2))
+  logger.info ("Fin de la génération des caches.")
