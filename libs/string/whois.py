@@ -70,7 +70,6 @@ def _adjust (parsed_data):
         v = _string_to_date (v)
       elif k in [ 'name_servers' ]:
         v = v.lower ()
-
       if v not in result[k]:
         result[k].append (v)
   return result
@@ -84,6 +83,8 @@ Algorithme :
   """
   if _is_to_many_requests (raw_data):
     raise TooManyWhoisRequestsException ("Trop de requêtes trop rapprochées.")
+  raw_data=raw_data.replace('\r','')
+  logger.debug ("Raw Data reformat : {}".format (raw_data))
   
   r = {
     'domain_name': [],
@@ -109,6 +110,15 @@ Algorithme :
         matches = re.compile (v[0]).findall (raw_data)
         logger.debug ("Matches : {}".format (matches))
         values = matches or [ v[1] ]
+        logger.debug ("avant : {}".format (values))
+        """
+        Ici on traite les retours à la con en full text (genre du whois uk) avec des \n
+        et qui se retrouve en forme de tableau bizarre grace au regex de type ((kldlgj)+)
+        => 2 groupes au lieu d'un et donc ça se comporte mal. On remet ça dans la forme standard
+        """
+        if isinstance (values[0], tuple):
+          values = [v for v in values[0][0].split('\n')[:-1]]
+          logger.debug ("Values (is instance) : {}".format (values))
         logger.debug ("Values : {}".format (values))
         for m in values:
           logger.debug ("Ajout de {}".format (m))

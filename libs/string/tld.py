@@ -29,10 +29,12 @@ def _extract_from_page (page):
 def _get_ns_tlds_mapping_from_iana ():
   result = {}
   for asso in _fetch_from_iana ():
-    if asso[1] not in result:
-      result[asso[1]] = []
-    logger.info ("{} -> {}".format (*asso))
-    result[asso[1]].append (asso[0])
+    print (asso[1])
+    if asso[1]:
+      if asso[1] not in result:
+        result[asso[1]] = []
+      logger.info ("{} -> {}".format (*asso))
+      result[asso[1]].append (asso[0])
   return result
 
 def get_server_for_tld (tlds = [ ], use_cache = True, cache_file = 'cache/tld_whois.py'):
