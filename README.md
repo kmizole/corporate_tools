@@ -2,9 +2,9 @@ Plusieurs outils & bibliothèques utilisés dans le service pour faire des chose
 
 # Installation
 ```
-python -m venv <NOM_ENVIRONNEMENT_VIRTUEL>
+python3 -m venv <NOM_ENVIRONNEMENT_VIRTUEL>
 source <NOM_ENVIRONNEMENT_VIRTUEL>/bin/activate
-git clone https://github.com/yapoc/corporate_tools.git
+git clone https://github.com/kmizole/corporate_tools.git
 cd corporate_tools
 pip install -r requirements
 ```
