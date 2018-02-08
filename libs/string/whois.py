@@ -124,6 +124,15 @@ Algorithme :
           logger.debug ("Ajout de {}".format (m))
           r[k].append (m)
     return _adjust (r)
-  except ModuleNotFoundError:
+  except ImportError:
     logger.error ("Impossible de charger le parser pour le domaine {}".format (tld))
-    return None
+    return {
+      'domain_name': [tld],
+      'registrar': ["Parser inexistant à coder"],
+      'registrant': ["Parser inexistant à coder"],
+      'creation_date': ["01-01-1970"],
+      'expiration_date': ["01-01-1970"],
+      'updated_date': ["01-01-1970"],
+      'name_servers': ["Parser inexistant à coder"],
+      'status': ["Parser inexistant à coder"],
+    }
