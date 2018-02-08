@@ -22,6 +22,7 @@ signal.signal (signal.SIGALRM, _time_out_handler)
 def _do_whois_query (domain, whois_server = None):
   if not whois_server:
     logger.debug ("Serveur de whois non fourni, supposition en cours.")
+    """ TODO ? : Amelioration en cours : recup du whois a la volee"""
     whois_server = '{}.whois-servers.net'.format (domain.split ('.')[-1])
 
   logger.info ("Utilisation du serveur {} pour whois sur domaine {}.".format (whois_server, domain))

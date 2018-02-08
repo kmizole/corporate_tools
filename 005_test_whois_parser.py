@@ -35,7 +35,10 @@ if __name__ == "__main__":
       
     whois_server = next (get_server_for_tld (tlds = [ tld ],\
       use_cache = True, cache_file = args.cache_file))[1]
-
+  else:
+    """Extract whois server a la volee"""
+    whois_server = next (get_server_for_tld (tlds = [ tld ], use_cache = False))[1]
+  
   whois_data = _do_whois_query (args.domain, whois_server = whois_server)
   data = parse (whois_data, tld)
   for k in [ 'creation_date', 'expiration_date', 'updated_date' ]:
