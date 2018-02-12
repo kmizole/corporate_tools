@@ -97,42 +97,39 @@ Algorithme :
     'status': [],
   }
   tld = tld.lower ()
-  try:
-    logger.debug ("Chargement du parser pour le tld {}".format (tld))
-    parser = getattr (import_module ('libs.string.whois_parsers.{}'.format (tld)), 'parser')
-    for k, v in parser.items ():
-      logger.debug ("Traitement de la clef {}".format (k))
-      if v[0] is None:
-        logger.debug ("Expression rationnelle None => ajout de {}".format (v[1]))
-        r[k].append ( v[1] )
-      else:
-        logger.debug ("Expression rationnelle définie à compiler.")
-        matches = re.compile (v[0]).findall (raw_data)
-        logger.debug ("Matches : {}".format (matches))
-        values = matches or [ v[1] ]
-        logger.debug ("avant : {}".format (values))
-        """
-        Ici on traite les retours à la con en full text (genre du whois uk) avec des \n
-        et qui se retrouve en forme de tableau bizarre grace au regex de type ((kldlgj)+)
-        => 2 groupes au lieu d'un et donc ça se comporte mal. On remet ça dans la forme standard
-        """
-        if isinstance (values[0], tuple):
-          values = [v for v in values[0][0].split('\n')[:-1]]
-          logger.debug ("Values (is instance) : {}".format (values))
-        logger.debug ("Values : {}".format (values))
-        for m in values:
-          logger.debug ("Ajout de {}".format (m))
-          r[k].append (m)
-    return _adjust (r)
-  except ImportError:
-    logger.error ("Impossible de charger le parser pour le domaine {}".format (tld))
-    return {
-      'domain_name': [tld],
-      'registrar': ["Parser inexistant à coder"],
-      'registrant': ["Parser inexistant à coder"],
-      'creation_date': ["01-01-1970"],
-      'expiration_date': ["01-01-1970"],
-      'updated_date': ["01-01-1970"],
-      'name_servers': ["Parser inexistant à coder"],
-      'status': ["Parser inexistant à coder"],
-    }
+  
+  logger.debug ("Chargement du parser pour le tld {}".format (tld))
+  try :
+    module = import_module ('libs.string.whois_parsers.{}'.format (tld))
+    cur_parser = "{}.py".format (tld)
+  except ImportError :
+    module = import_module ('libs.string.whois_parsers.default')
+    cur_parser = "default.py"
+  
+  logger.info ("Parser utilisé : {}".format (cur_parser)) 
+  parser = getattr (module, 'parser')
+  for k, v in parser.items ():
+    logger.debug ("Traitement de la clef {}".format (k))
+    if v[0] is None:
+      logger.debug ("Expression rationnelle None => ajout de {}".format (v[1]))
+      r[k].append ( v[1] )
+    else:
+      logger.debug ("Expression rationnelle définie à compiler.")
+      matches = re.compile (v[0]).findall (raw_data)
+      logger.debug ("Matches : {}".format (matches))
+      values = matches or [ v[1] ]
+      logger.debug ("avant : {}".format (values))
+      """
+      Ici on traite les retours à la con en full text (genre du whois uk) avec des \n
+      et qui se retrouve en forme de tableau bizarre grace au regex de type ((kldlgj)+)
+      => 2 groupes au lieu d'un et donc ça se comporte mal. On remet ça dans la forme standard
+      """
+      if isinstance (values[0], tuple):
+        values = [v for v in values[0][0].split('\n')[:-1]]
+        logger.debug ("Values (is instance) : {}".format (values))
+      logger.debug ("Values : {}".format (values))
+      for m in values:
+        logger.debug ("Ajout de {}".format (m))
+        r[k].append (m)
+  return _adjust (r)
+    
