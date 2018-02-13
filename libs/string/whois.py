@@ -132,4 +132,3 @@ Algorithme :
         logger.debug ("Ajout de {}".format (m))
         r[k].append (m)
   return _adjust (r)
-    
